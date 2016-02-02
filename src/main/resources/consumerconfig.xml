@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="queryProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    </bean>
+
+    <bean id="producer" class="com.kali.scala.kafka.producer.SourceDB">
+        <constructor-arg value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <constructor-arg value="jdbc:sqlserver://localhost;user=admin;password=oracle;database=AdventureWorks2014" />
+        <constructor-arg value="admin" />
+        <constructor-arg value="oracle" />
+        <constructor-arg value="(select top 10 CustomerID,StoreID,TerritoryID,AccountNumber from AdventureWorks2014.dbo.Customer ) as customer" />
+        <constructor-arg value="1" />
+        <constructor-arg value="100" />
+        <constructor-arg value="8" />
+        <constructor-arg value="CustomerID" />
+    </bean>
+</beans>
