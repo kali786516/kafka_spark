@@ -40,8 +40,10 @@ object SparkUserRecomendation {
     // join my user rating data with movie rating data, (rank=5,10 iterations,0.01 as lambda)
     val movierating=ratings.union(pratings)
     //movierating.foreach(println)
-    val model=ALS.train(movierating,5,10,0.01)
+    val model=ALS.train(movierating,10,10,0.01)
 
+
+/*
     //recommend movie for users .....
     val test=model.recommendProductsForUsers(944).take(3)
 
@@ -50,19 +52,14 @@ object SparkUserRecomendation {
     val test3=sc.broadcast(test2.collect().toMap)
     //println(test3.value(1.toString))
 
+
     test.foreach { r =>
-     println("MovieID %d".format(r._1)+""+ test3.value(r._1.toString))
+     println("MovieID %d".format(r._1)+":Movie Name:"+ test3.value(r._1.toString))
     }
-
-
-
-
-
-
-
-    //model.predict(sc.parallelize(Array((944,148)))).collect.foreach(println)
-
-    //model.predict(sc.parallelize(Array((944,148)))).collect.foreach(println)
+*/
+    //best product recomendation I think .......
+    model.predict(sc.parallelize(Array((944,195)))).collect.foreach(println)
+    model.predict(sc.parallelize(Array((944,148)))).collect.foreach(println)
 
   }
 
