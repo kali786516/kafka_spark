@@ -62,6 +62,7 @@ object ScalaKafkaProducerDF {
       for (test <- df.collectAsList().toArray)
       {
         producer.send(new KeyedMessage[String, String]("first", test.toString.replace("[","").replace("]","").replace(",","~").replace(" ","")))
+        producer.close()
       }
 
 
