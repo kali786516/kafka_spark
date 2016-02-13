@@ -54,16 +54,18 @@ object UserBasedProdcutRecomendation {
     val userMap2=userIndex2.collectAsMap()
     val broadcastUserMap2=sc.broadcast(userMap2)
 
-    val songIndex2=songs.map(_.split("\\W+")).map(x => (x(1).toInt,x(0)))
-    val songMap2=songIndex2.collectAsMap()
+    val songIndex2=songs
+                   .map(_.split("\\W+"))
+                   .map(x => (x(1).toInt,x(0)))
+    val songMap2=songIndex2
+                 .collectAsMap()
     val broadcastSongMap2=sc.broadcast(songMap2)
 
 
-    rating.map(r => (r.rating,broadcastUserMap2.value(r.user),r.user.toString,broadcastSongMap2.value.getOrElse(r.product,0),r.product)).sortBy(_._1,false).take(5).foreach(println)
-
-
+    rating.map(r => (r.rating,broadcastUserMap2.value(r.user),r.user.toString,broadcastSongMap2.value.getOrElse(r.product,0),r.product != 0))
+          .sortBy(_._1,true)
+          .take(100)
+          .foreach(println)
 
   }
-
-
 }
